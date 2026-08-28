@@ -11,6 +11,7 @@ public static class LoginEndpoint
 
     public async static Task<IResult> LoginUser()
     {
+        // Implement your login logic here, e.g., validate user credentials, generate JWT token, etc elswhere
         return Results.Unauthorized();
     }
 }
