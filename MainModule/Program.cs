@@ -1,5 +1,5 @@
-using DataAccess.Models;
 using MainModule.BuildPipeline;
+using MainModule.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,5 +11,9 @@ var app = builder.Build();
 app.UseCors();
 
 app.UseOpenApi();
+
+app.UseHttpsRedirection();
+
+app.AddEndpoints();
 
 app.Run();

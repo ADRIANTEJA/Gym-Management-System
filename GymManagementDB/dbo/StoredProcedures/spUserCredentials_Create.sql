@@ -11,4 +11,6 @@ BEGIN
 	INSERT INTO dbo.UserCredentials (EmailAddress, [Password])
 	VALUES (@EmailAddress, @Password)
 
+	SELECT @EmailAddress FROM dbo.UserCredentials 
+	WHERE Id = SCOPE_IDENTITY();
 END

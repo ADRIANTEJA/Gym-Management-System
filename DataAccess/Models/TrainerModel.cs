@@ -26,5 +26,5 @@ public class TrainerModel
     public int PersonalId { get; set; }
 
     [Required]
-    public string UserCredentialsId { get; set; }
+    public int UserCredentialsId { get; set; }
 }

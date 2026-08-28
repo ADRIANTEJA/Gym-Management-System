@@ -4,17 +4,17 @@ namespace DataAccess.DataAccess;
 
 public class MemberData
 {
-    private ISQLDataAccsess _dbAccess;
+    private ISQLDataAccess _dbAccess;
     private ConnectionStringData _connectionStringData;
 
-    public MemberData(ISQLDataAccsess dbAccess, ConnectionStringData connectionStringData)
+    public MemberData(ISQLDataAccess dbAccess, ConnectionStringData connectionStringData)
     {
         _dbAccess = dbAccess;
         _connectionStringData = connectionStringData;
     }
 
-    public async Task<int> CreateMember(MemberModel newMember)
+    public async Task<T> CreateMember<U, T>(U newMember)
     {
-        return await _dbAccess.SaveDataAsync("dbo.spMember_Create", newMember, _connectionStringData.SQLDBConnectionName);
+        return await _dbAccess.SaveDataAsync<U, T>("dbo.spMember_Create", newMember, _connectionStringData.SQLDBConnectionName);
     }
 }

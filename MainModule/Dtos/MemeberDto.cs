@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataAccess.Models;
+namespace MainModule.Dtos;
 
-public class MemberModel
+public class MemberDto
 {
-    public int? Id { get; init; }
-
     [Required]
     public string FullName { get; set; }
 

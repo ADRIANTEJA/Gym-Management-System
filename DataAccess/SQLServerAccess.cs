@@ -5,7 +5,7 @@ using System.Data;
 
 namespace DataAccess;
 
-public class SQLServerAccess : ISQLDataAccsess
+public class SQLServerAccess : ISQLDataAccess
 {
     private readonly IConfiguration _config;
 
@@ -14,7 +14,7 @@ public class SQLServerAccess : ISQLDataAccsess
         _config = config;
     }
 
-    public async Task<List<T>> LoadDataAsync<T, U>(string storedProcedure, U parameters, string connectionStringName)
+    public async Task<List<T>> LoadDataAsync<U, T>(string storedProcedure, U parameters, string connectionStringName)
     {
         string? connectionString = _config.GetConnectionString(connectionStringName);
 
@@ -25,13 +25,13 @@ public class SQLServerAccess : ISQLDataAccsess
         return rows.ToList();
     }
 
-    public async Task<int> SaveDataAsync<U>(string storedProcedure, U parameters, string connectionStringName)
+    public async Task<T> SaveDataAsync<U, T>(string storedProcedure, U parameters, string connectionStringName)
     {
         string? connectionString =  _config.GetConnectionString(connectionStringName);
 
         using var connection = new SqlConnection(connectionString);
 
-        int result = await connection.ExecuteAsync(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
+        var result = await connection.QuerySingleAsync<T>(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
 
         return result;
     }

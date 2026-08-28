@@ -4,13 +4,13 @@ namespace MainModule.Endpoints;
 
 public static class LoginEndpoint
 {
-    public static void AddLoginEndpoint(this WebApplication app)
+    public static void MapLoginEndpoints(this WebApplication app)
     {
-       // app.MapPost();
+       app.MapGet("/api/user/login", LoginUser);
     }
 
-    public async static Task LoginAsync()
+    public async static Task<IResult> LoginUser()
     {
-
+        return Results.Unauthorized();
     }
 }
