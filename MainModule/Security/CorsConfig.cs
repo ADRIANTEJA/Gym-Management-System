@@ -1,11 +1,13 @@
-﻿namespace MainModule.BuildPipeline;
+﻿using MainModule.Security;
+
+namespace MainModule.Security;
 
 public static class CorsConfig
 {
     private const string AllowDevServerPolicy = "AllowDevServer";
     private const string DefProductionServerPolicy = "DefaultServerPolicy";
 
-    public static void AddCorsService(this WebApplicationBuilder builder)
+    public static void ConfigureCorsService(this WebApplicationBuilder builder)
     {
         string? origins = builder.Configuration.GetValue<string>("AllowedOrigins"); 
 

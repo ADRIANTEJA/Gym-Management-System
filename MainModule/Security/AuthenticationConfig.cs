@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -7,12 +6,12 @@ namespace MainModule.Authentication;
 
 public static class AuthenticationConfig
 {
-    public static void AddAuthentication(this WebApplicationBuilder builder)
+    public static void ConfigureAuthenticationService(this WebApplicationBuilder builder)
     {
         builder.Services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         })
         .AddJwtBearer(options =>
         {
@@ -24,7 +23,7 @@ public static class AuthenticationConfig
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = builder.Configuration.GetSection("JwtOptions:Issuer").Value,
                 ValidAudience = builder.Configuration.GetSection("JwtOptions:Audience").Value,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JwtOptions:Key").Value))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JwtOptions:SecretKey").Value!))
             };
         });
     }

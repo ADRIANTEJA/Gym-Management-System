@@ -1,10 +1,10 @@
 ﻿using Scalar.AspNetCore;
 
-namespace MainModule.BuildPipeline;
+namespace MainModule.Debug;
 
 public static class OpenApiConfig
 {
-    public static void AddOpenApiServices(this IServiceCollection services)
+    public static void ConfigureOpenApiService(this IServiceCollection services)
     {
         services.AddOpenApi();
     }

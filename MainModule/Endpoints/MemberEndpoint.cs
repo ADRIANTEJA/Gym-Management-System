@@ -1,5 +1,6 @@
 ﻿using DataAccess.DataAccess;
 using MainModule.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MainModule.Endpoints;
