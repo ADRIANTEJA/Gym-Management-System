@@ -3,6 +3,6 @@ namespace DataAccess;
 
 public interface ISQLDataAccess
 {
-    Task<List<T>> LoadDataAsync<U, T>(string storedProcedure, U parameters, string connectionStringName);
-    Task<T> SaveDataAsync<U, T>(string storedProcedure, U parameters, string connectionStringName);
+    Task<List<T>> LoadDataAsync<T, U>(string storedProcedure, U parameters, string connectionStringName) where U : class;
+    Task<int> SaveDataAsync<U>(string storedProcedure, U parameters, string connectionStringName) where U : class;
 }

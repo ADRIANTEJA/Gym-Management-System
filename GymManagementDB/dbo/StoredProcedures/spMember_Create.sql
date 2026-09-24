@@ -3,7 +3,8 @@
 	@Age int,
 	@PhoneNumber nvarchar(20),
 	@PersonalId nvarchar(50),
-	@UserCredentialsId int
+	@UserCredentialsId int,
+	@Id int OUTPUT
 AS
 
 BEGIN
@@ -13,6 +14,5 @@ BEGIN
 	INSERT INTO dbo.Member (FullName, Age, PhoneNumber, PersonalId, UserCredentialsId)
 	VALUES (@FullName, @Age, @PhoneNumber, @PersonalId, @UserCredentialsId);
 
-	SELECT * FROM dbo.Member 
-	WHERE Id = SCOPE_IDENTITY();
+	SET @Id = SCOPE_IDENTITY();
 END

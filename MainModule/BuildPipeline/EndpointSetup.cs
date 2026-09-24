@@ -6,7 +6,7 @@ public static class EndpointSetup
 {
     public static void AddEndpoints(this WebApplication app)
     {
-        app.MapMemberEndpoints();
+        app.MapAuthenticationEndpoints();
         app.MapLoginEndpoints();
     }
 }

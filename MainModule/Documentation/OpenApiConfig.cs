@@ -1,6 +1,6 @@
 ﻿using Scalar.AspNetCore;
 
-namespace MainModule.Debug;
+namespace MainModule.Documentation;
 
 public static class OpenApiConfig
 {

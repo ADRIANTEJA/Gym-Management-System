@@ -1,9 +1,10 @@
 using MainModule.BuildPipeline;
-using MainModule.Debug;
+using MainModule.Documentation;
 using MainModule.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.ConfigureServices();
 builder.AddServices();
 builder.ConfigureSecretSecurityKey();
 

@@ -1,15 +1,16 @@
-﻿
+﻿using DataAccess.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace DataAccess.DataAccess;
 
 public class ScheduleData
 {
-    private ISQLDataAccess _dbAccess;
-    private ConnectionStringData _connectionStringData;
+    private readonly ISQLDataAccess _dbAccess;
+    private readonly IOptions<ConnectionStringOptions> _connectionStringOptions;
 
-    public ScheduleData(ISQLDataAccess dbAccess, ConnectionStringData connectionStringData)
+    public ScheduleData(ISQLDataAccess dbAccess, IOptions<ConnectionStringOptions> connectionStringOptions)
     {
         _dbAccess = dbAccess;
-        _connectionStringData = connectionStringData;
+        _connectionStringOptions = connectionStringOptions;
     }
 }

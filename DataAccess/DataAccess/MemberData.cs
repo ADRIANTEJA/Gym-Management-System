@@ -1,20 +1,31 @@
-﻿using DataAccess.Models;
+﻿using Dapper;
+using DataAccess.Configuration;
+using DataAccess.Models;
+using Microsoft.Extensions.Options;
 
 namespace DataAccess.DataAccess;
 
 public class MemberData
 {
-    private ISQLDataAccess _dbAccess;
-    private ConnectionStringData _connectionStringData;
+    private readonly ISQLDataAccess _dbAccess;
+    private readonly IOptions<ConnectionStringOptions> _connectionStringOptions;
 
-    public MemberData(ISQLDataAccess dbAccess, ConnectionStringData connectionStringData)
+    public MemberData(ISQLDataAccess dbAccess, IOptions<ConnectionStringOptions> connectionStringOptions)
     {
         _dbAccess = dbAccess;
-        _connectionStringData = connectionStringData;
+        _connectionStringOptions = connectionStringOptions;
     }
 
-    public async Task<T> CreateMember<U, T>(U newMember)
+    public async Task<int> CreateMember(MemberModel newMember)
     {
-        return await _dbAccess.SaveDataAsync<U, T>("dbo.spMember_Create", newMember, _connectionStringData.SQLDBConnectionName);
+        var dynamicParameters = new DynamicParameters();
+        dynamicParameters.Add(nameof(MemberModel.FullName), newMember.FullName);
+        dynamicParameters.Add(nameof(MemberModel.Age), newMember.Age);
+        dynamicParameters.Add(nameof(MemberModel.PhoneNumber), newMember.PhoneNumber);
+        dynamicParameters.Add(nameof(MemberModel.PersonalId), newMember.PersonalId);
+
+        await _dbAccess.SaveDataAsync("dbo.spMember_Create", dynamicParameters, _connectionStringOptions.Value.SQLServerConnectionString);
+
+        return dynamicParameters.Get<int>(nameof(MemberModel.Id));
     }
 }

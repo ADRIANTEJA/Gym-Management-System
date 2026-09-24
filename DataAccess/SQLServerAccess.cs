@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Dapper;
+﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
@@ -7,32 +6,21 @@ namespace DataAccess;
 
 public class SQLServerAccess : ISQLDataAccess
 {
-    private readonly IConfiguration _config;
-
-    public SQLServerAccess(IConfiguration config)
+    public async Task<List<T>> LoadDataAsync<T, U>(string storedProcedure, U dynamicParameters, string connectionString) where U : class
     {
-        _config = config;
-    }
+        await using var connection = new SqlConnection(connectionString);
 
-    public async Task<List<T>> LoadDataAsync<U, T>(string storedProcedure, U parameters, string connectionStringName)
-    {
-        string? connectionString = _config.GetConnectionString(connectionStringName);
-
-        using var connection = new SqlConnection(connectionString);
-
-        var rows = await connection.QueryAsync<T>(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
+        var rows = await connection.QueryAsync<T>(storedProcedure, dynamicParameters, commandType: CommandType.StoredProcedure);
 
         return rows.ToList();
     }
 
-    public async Task<T> SaveDataAsync<U, T>(string storedProcedure, U parameters, string connectionStringName)
+    public async Task<int> SaveDataAsync<U>(string storedProcedure, U dynamicParameters, string connectionString) where U : class
     {
-        string? connectionString =  _config.GetConnectionString(connectionStringName);
+        var command = new CommandDefinition(storedProcedure, dynamicParameters, commandType: CommandType.StoredProcedure);
 
-        using var connection = new SqlConnection(connectionString);
+        await using var connection = new SqlConnection(connectionString);
 
-        var result = await connection.QuerySingleAsync<T>(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
-
-        return result;
+        return await connection.ExecuteAsync(command);
     }
 }

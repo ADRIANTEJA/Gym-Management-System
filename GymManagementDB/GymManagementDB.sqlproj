@@ -72,6 +72,7 @@
     <Build Include="dbo\Tables\UserCredentials.sql" />
     <Build Include="dbo\StoredProcedures\spUserCredentials_Create.sql" />
     <Build Include="dbo\StoredProcedures\spUserCredentials_GetById.sql" />
+    <Build Include="dbo\StoredProcedures\spUserCredentials_GetByEmailAddress.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="GymManagementDB.refactorlog" />

@@ -2,12 +2,14 @@
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace MainModule.Authentication;
+namespace MainModule.Security;
 
 public static class AuthenticationConfig
 {
     public static void ConfigureAuthenticationService(this WebApplicationBuilder builder)
     {
+        builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
+
         builder.Services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -21,9 +23,9 @@ public static class AuthenticationConfig
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = builder.Configuration.GetSection("JwtOptions:Issuer").Value,
-                ValidAudience = builder.Configuration.GetSection("JwtOptions:Audience").Value,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JwtOptions:SecretKey").Value!))
+                ValidIssuer = builder.Configuration.GetSection("JwtAuthentication:Issuer").Value,
+                ValidAudience = builder.Configuration.GetSection("JwtAuthentication:Audience").Value,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JwtAuthentication:SecretKey").Value!))
             };
         });
     }

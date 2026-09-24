@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[spUserCredentials_Create]
-	@EmailAddress nvarchar(30),
-	@Password nvarchar(20)
+	@EmailAddress nvarchar(50),
+	@HashedPassword nvarchar(20),
+	@Id int OUTPUT
 
 AS
 
@@ -8,9 +9,8 @@ BEGIN
 
 	SET NOCOUNT ON;
 
-	INSERT INTO dbo.UserCredentials (EmailAddress, [Password])
-	VALUES (@EmailAddress, @Password)
+	INSERT INTO dbo.UserCredentials (EmailAddress, HashedPassword)
+	VALUES (@EmailAddress, @HashedPassword);
 
-	SELECT @EmailAddress FROM dbo.UserCredentials 
-	WHERE Id = SCOPE_IDENTITY();
+    SET @Id = SCOPE_IDENTITY();
 END

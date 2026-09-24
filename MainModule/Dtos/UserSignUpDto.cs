@@ -2,7 +2,7 @@
 
 namespace MainModule.Dtos;
 
-public class MemberDto
+public class UserSignUpDto
 {
     [Required]
     public string FullName { get; set; }
@@ -17,5 +17,9 @@ public class MemberDto
     public string PersonalId { get; set; }
 
     [Required]
-    public int UserCredentialsId { get; set; }
+    [EmailAddress(ErrorMessage = "Invalid email address format.")]
+    public string EmailAddress { get; set; }
+
+    [Required]
+    public string Password { get; set; }
 }
