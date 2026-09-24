@@ -13,13 +13,14 @@ public static class OpenApiConfig
     {
         if (app.Environment.IsDevelopment())
         {
-            app.MapOpenApi();
+            app.MapOpenApi().AllowAnonymous();
             app.MapScalarApiReference(options =>
             {
                 options.Title = "Gym Management System Main Module";
                 options.HideClientButton = true;
                 options.Layout = ScalarLayout.Modern;
-            });
+            })
+            .AllowAnonymous();
         }
     }
 }

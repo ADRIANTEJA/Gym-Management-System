@@ -6,11 +6,9 @@ public static class AuthorizationConfig
 {
     public static void ConfigureAuthorizationService(this WebApplicationBuilder builder)
     {
-        builder.Services.AddAuthorization(options =>
-        {
-            options.FallbackPolicy =  new AuthorizationPolicyBuilder()
+        builder.Services.AddAuthorizationBuilder()
+            .SetFallbackPolicy(new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
-                .Build();
-        });
+                .Build());
     }
 }

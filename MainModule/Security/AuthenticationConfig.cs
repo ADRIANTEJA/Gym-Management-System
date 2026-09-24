@@ -23,9 +23,9 @@ public static class AuthenticationConfig
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = builder.Configuration.GetSection("JwtAuthentication:Issuer").Value,
-                ValidAudience = builder.Configuration.GetSection("JwtAuthentication:Audience").Value,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JwtAuthentication:SecretKey").Value!))
+                ValidIssuer = builder.Configuration.GetSection("JwtOptions:Issuer").Value,
+                ValidAudience = builder.Configuration.GetSection("JwtOptions:Audience").Value,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JwtOptions:SecretKey").Value!))
             };
         });
     }
